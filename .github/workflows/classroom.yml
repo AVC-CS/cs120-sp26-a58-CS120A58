@@ -19,23 +19,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # ---- Grader 1: compile main.cpp (10 pts) ----
-      - name: Compile and Sanitize main.cpp
+      # ---- Grader 1: compile main_write.cpp and main_read.cpp (10 pts) ----
+      - name: Compile and Sanitize
         id: compile
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: "Compile main.cpp"
-          command: g++ -std=c++17 -fsanitize=address -Wall -Wextra -c main.cpp -o /tmp/main.o
+          test-name: "Compile main_write.cpp and main_read.cpp"
+          command: g++ -std=c++17 -fsanitize=address -Wall -Wextra -c main_write.cpp -o /tmp/main_write.o && g++ -std=c++17 -fsanitize=address -Wall -Wextra -c main_read.cpp -o /tmp/main_read.o
           timeout: 30
           max-score: 10
 
-      # ---- Grader 2: build & run main (10 pts) ----
-      - name: Build & run main
+      # ---- Grader 2: build & run (10 pts) ----
+      - name: Build & run
         id: run
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: "Build & run main"
-          # command: g++ -std=c++17 -Wall -Wextra main.cpp -o main && timeout 10 ./main < data/data1.txt > result1.txt 
+          test-name: "Build & run"
           command: chmod +x data/run.sh && data/run.sh
           timeout: 30
           max-score: 10
